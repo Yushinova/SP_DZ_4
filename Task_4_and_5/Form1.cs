@@ -63,7 +63,7 @@ namespace Task_4_and_5
             await Task.Run(() => FindFolder());
 
         }
-        private async void FindFolder()
+        private async Task FindFolder()
         {
             int count2 = 0;
             try

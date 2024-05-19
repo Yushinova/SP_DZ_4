@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -23,7 +24,7 @@ namespace Task_4_and_5
             InitializeComponent();
         }
 
-        private async void FindFileButton_Click(object sender, EventArgs e)
+        private async void FindFileButton_Click(object sender, EventArgs e)//поиск в файле
         {
             Word = FindWord.Text;
             File_path = FilePath.Text;
@@ -31,7 +32,7 @@ namespace Task_4_and_5
             ResultFile.Text = count.ToString();
         }
 
-        private int FindFile(string path)
+        private int FindFile(string path)//возвращает количество вхождений
         {
            count = 0;
             try
@@ -56,14 +57,14 @@ namespace Task_4_and_5
            catch (Exception ex) { return 0; }
         }
 
-        private async void FindFolderButton_Click(object sender, EventArgs e)
+        private async void FindFolderButton_Click(object sender, EventArgs e)//поиск в папке
         {
             Word = FindWord.Text;
             Folder_path = FolderPath.Text;
             await Task.Run(() => FindFolder());
 
         }
-        private async Task FindFolder()
+        private async Task FindFolder()//поиск в папке и подпапках
         {
             int count2 = 0;
             try
@@ -73,6 +74,7 @@ namespace Task_4_and_5
                 {
                     count2 = await Task.Run(() => FindFile(item));
                     Invoke(new Action(() => ListRes.Items.Add(System.IO.Path.GetFileName(item)).SubItems.AddRange(new[] { item, count2.ToString() })));
+
                 }
             }
            catch (Exception ex) { }
